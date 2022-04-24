@@ -21,6 +21,7 @@ class GameScene extends Phaser.Scene {
 	}
 	
     create (){	
+		this.score = 100;
 		var json = localStorage.getItem("config") || '{"cards":2,"dificulty":"hard"}';
 		var options_data;
 		options_data = JSON.parse(json);
@@ -139,6 +140,21 @@ class GameScene extends Phaser.Scene {
 							},1000);
 							if (this.score <= 0){
 								alert("Game Over");
+								fetch("../../php/save.php",{
+									method: "POST",
+									body: JSON.stringify({
+										name: this.name,
+										score: this.totalScore
+									}),
+									headers: {
+										"Content-type": "application/json"
+									}
+								}).then(response => response.json()).then(json => {
+									alert(json.score);
+								})
+								.catch((error) => {
+									alert('Error:', error);
+								});
 								loadpage("./phaserMenu.html");
 							}
 						}

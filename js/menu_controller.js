@@ -14,6 +14,10 @@ function phaser_menu(){
 	loadpage("./html/phaserMenu.html");
 }
 
+function puntuacions(){
+	loadpage("../php/save.php");
+}
+
 function exit (){
 	if (name != ""){
 		alert("Leaving " + name + "'s game");
@@ -26,10 +30,10 @@ function sortir (){
 }
 
 function options(){
-	loadpage("../html/options.html");
+	loadpage("./html/options.html");
 }
 
 function load(){
-	loadpage("./html/load.html");
+	loadpage("./load.html");
 }
 

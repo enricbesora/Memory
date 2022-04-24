@@ -30,7 +30,7 @@ function sortir (){
 }
 
 function options(){
-	loadpage("./html/options.html");
+	loadpage("./options.html");
 }
 
 function load(){

@@ -7,7 +7,7 @@ function start_game(){
 }
 
 function phaser_game(){
-	loadpage("./html/phasergame.html");
+	loadpage("../html/phasergame.html");
 }
 
 function phaser_menu(){
@@ -22,11 +22,11 @@ function exit (){
 }
 
 function sortir (){
-	loadpage("./index.html");
+	loadpage("../index.html");
 }
 
 function options(){
-	loadpage("./html/options.html");
+	loadpage("../html/options.html");
 }
 
 function load(){

@@ -18,20 +18,83 @@ class GameScene extends Phaser.Scene {
 	}
 	
     create (){	
-		let arraycards = ['co', 'sb', 'co', 'sb'];
+		var json = localStorage.getItem("config") || '{"cards":2,"dificulty":"hard"}';
+		var options_data;
+		options_data = JSON.parse(json);
+		this.cards = options_data.cards;
+		switch (options_data.dificulty){
+			case 'easy':
+				this.time = 2000;
+				this.dificultyMultiplier = 5;
+				break;
+			case 'normal':
+				this.time = 700;
+				this.dificultyMultiplier = 10;
+				break;
+			case 'hard':
+				this.time = 200;
+				this.dificultyMultiplier = 20;
+				break;
+			default:
+				this.time = 700;
+				this.dificultyMultiplier = 10;
+				break;
+		}
 		this.cameras.main.setBackgroundColor(0xBFFCFF);
-		
-		this.add.image(250, 300, arraycards[0]);
-		this.add.image(350, 300, arraycards[1]);
-		this.add.image(450, 300, arraycards[2]);
-		this.add.image(550, 300, arraycards[3]);
-		
-		this.cards = this.physics.add.staticGroup();
-		
-		this.cards.create(250, 300, 'back');
-		this.cards.create(350, 300, 'back');
-		this.cards.create(450, 300, 'back');
-		this.cards.create(550, 300, 'back');
+		var arraycards = ['cb','co','sb','so','tb','to'];
+		arraycards = arraycards.slice(); // Copiem l'array
+		arraycards.sort(function(){return Math.random() - 0.5}); // Array aleatòria
+		arraycards = arraycards.slice(0, this.cards); // Agafem els primers numCards elements
+		arraycards = arraycards.concat(arraycards); // Dupliquem els elements
+		arraycards.sort(function(){return Math.random() - 0.5}); // Array aleatòria
+
+		switch (this.cards) {
+			case 2:
+				this.add.image(250, 300, arraycards[0]);
+				this.add.image(350, 300, arraycards[1]);
+				this.add.image(450, 300, arraycards[2]);
+				this.add.image(550, 300, arraycards[3]);
+				
+				this.cards = this.physics.add.staticGroup();
+				
+				this.cards.create(250, 300, 'back');
+				this.cards.create(350, 300, 'back');
+				this.cards.create(450, 300, 'back');
+				this.cards.create(550, 300, 'back');
+				break;
+
+			case 3:
+				this.add.image(150, 300, arraycards[0]);
+				this.add.image(250, 300, arraycards[1]);
+				this.add.image(350, 300, arraycards[2]);
+				this.add.image(450, 300, arraycards[3]);
+				this.add.image(550, 300, arraycards[4]);
+				this.add.image(650, 300, arraycards[5]);
+				
+				this.cards = this.physics.add.staticGroup();
+				
+				this.cards.create(150, 300, 'back');
+				this.cards.create(250, 300, 'back');
+				this.cards.create(350, 300, 'back');
+				this.cards.create(450, 300, 'back');
+				this.cards.create(550, 300, 'back');
+				this.cards.create(650, 300, 'back');
+				
+				break;
+
+			default:
+				break;
+		}
+		this.cards.children.iterate((card)=>{
+			card.card_id = arraycards[i];
+		},card);
+		this.timeout= setTimeout(girarCartes,this.time);
+		function girarCartes(){
+			this.cards.children.iterate((card)=>{
+				card.card_id = 'back';
+			},card);
+		}
+
 		
 		let i = 0;
 		this.cards.children.iterate((card)=>{
@@ -42,7 +105,7 @@ class GameScene extends Phaser.Scene {
 				card.disableBody(true,true);
 				if (this.firstClick){
 					if (this.firstClick.card_id !== card.card_id){
-						this.score -= 20;
+						this.score -= this.dificultyMultiplier;
 						this.firstClick.enableBody(false, 0, 0, true, true);
 						card.enableBody(false, 0, 0, true, true);
 						if (this.score <= 0){

@@ -6,6 +6,8 @@ var config = {
 	time: 0,
 	timeout : 0,
 	dificultyMultiplier: 0,
+	dificulty: 'normal',
+	games: 0,
     parent: 'game_area',
 	physics: {
 		default: 'arcade',

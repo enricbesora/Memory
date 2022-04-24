@@ -151,7 +151,7 @@ class GameScene extends Phaser.Scene {
 						setTimeout(()=>{
 							aux.enableBody(false, 0, 0, true, true);
 							card.enableBody(false, 0, 0, true, true);
-						},200);
+						},1000);
 						if (this.score <= 0){
 							alert("Game Over");
 							loadpage("../");
